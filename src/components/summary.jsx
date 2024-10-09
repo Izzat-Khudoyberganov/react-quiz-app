@@ -1,11 +1,10 @@
 import React from "react";
-import questions from "../questions";
 import img from "../assets/quiz-complete.png";
 
-const Summary = ({ userAnswers }) => {
+const Summary = ({ userAnswers, questions }) => {
     const skippedAnswers = userAnswers.filter((answer) => answer == null);
     const correctAnswers = userAnswers.filter(
-        (answer, index) => answer === questions[index].answers[0]
+        (answer, index) => answer === questions[index].Options[0]
     );
 
     const skippedAnswersShare = Math.round(
@@ -42,7 +41,7 @@ const Summary = ({ userAnswers }) => {
 
                     if (answer == null) {
                         cssClass += " skipped";
-                    } else if (answer === questions[index].answers[0]) {
+                    } else if (answer === questions[index].Options[0]) {
                         cssClass += " correct";
                     } else {
                         cssClass += " wrong";
@@ -51,7 +50,7 @@ const Summary = ({ userAnswers }) => {
                     return (
                         <li key={index}>
                             <h3>{index + 1}</h3>
-                            <p className='question'>{questions[index].text}</p>
+                            <p className='question'>{questions[index].Title}</p>
                             <p className={cssClass}>{answer ?? "skipped"}</p>
                         </li>
                     );

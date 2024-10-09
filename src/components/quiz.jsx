@@ -1,12 +1,32 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Summary from "./summary";
 import QuestionTimer from "./question-timer";
-import questions from "../questions";
 
 const Quiz = () => {
     const [userAnswer, setUserAnswers] = useState([]);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const activeQuestionIndex = userAnswer.length;
-    const quizIsComplete = activeQuestionIndex === questions.length;
+    const quizIsComplete = activeQuestionIndex === data.length;
+
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/tests");
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const result = await response.json();
+            setData(result);  
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);  
+        }
+    };
+
+
 
     const handleSelectAnswer = useCallback(
         function handleSelectAnswer(selectedAnswer) {
@@ -21,12 +41,23 @@ const Quiz = () => {
         handleSelectAnswer(null);
     }, [handleSelectAnswer]);
 
+  
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+
     if (quizIsComplete) {
-        return <Summary userAnswers={userAnswer} />;
+        return <Summary userAnswers={userAnswer} questions={data} />;
     }
 
-    const shuffledAnswers = [...questions[activeQuestionIndex].answers];
+    const shuffledAnswers = [...data[activeQuestionIndex].Options];
     shuffledAnswers.sort(() => Math.random() - 0.5);
+
     return (
         <div id='quiz'>
             <div id='question'>
@@ -35,7 +66,7 @@ const Quiz = () => {
                     onTimeout={handleSkipAnswer}
                     key={activeQuestionIndex}
                 />
-                <h1>{questions[activeQuestionIndex].text}</h1>
+                <h1>{data[activeQuestionIndex].Title}</h1>
                 <ul id='answers'>
                     {shuffledAnswers.map((answer) => (
                         <li key={answer} className='answer'>
