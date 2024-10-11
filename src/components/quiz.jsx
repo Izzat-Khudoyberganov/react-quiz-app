@@ -62,7 +62,7 @@ const Quiz = () => {
         <div id='quiz'>
             <div id='question'>
                 <QuestionTimer
-                    timeout={10000}
+                    timeout={60000}
                     onTimeout={handleSkipAnswer}
                     key={activeQuestionIndex}
                 />
