@@ -42,7 +42,12 @@ const Quiz = () => {
         fetchData();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading)
+        return (
+            <div className='container'>
+                <p>Loading...</p>
+            </div>
+        );
     if (error) return <p>Error: {error}</p>;
 
     if (quizIsComplete) {
@@ -55,11 +60,16 @@ const Quiz = () => {
     return (
         <div id='quiz'>
             <div id='question'>
-                <QuestionTimer
-                    timeout={60000}
-                    onTimeout={handleSkipAnswer}
-                    key={activeQuestionIndex}
-                />
+                <div className='flex'>
+                    <span id='question-number'>
+                        {activeQuestionIndex + 1} - SAVOL
+                    </span>
+                    <QuestionTimer
+                        timeout={60000}
+                        onTimeout={handleSkipAnswer}
+                        key={activeQuestionIndex}
+                    />
+                </div>
                 <h1>{data[activeQuestionIndex].Title}</h1>
                 <ul id='answers'>
                     {shuffledAnswers.map((answer) => (
