@@ -10,23 +10,20 @@ const Quiz = () => {
     const activeQuestionIndex = userAnswer.length;
     const quizIsComplete = activeQuestionIndex === data.length;
 
-
     const fetchData = async () => {
         try {
-            const response = await fetch("http://localhost:8080/tests");
+            const response = await fetch("https://quiz-app.koyeb.app/tests");
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
             const result = await response.json();
-            setData(result);  
+            setData(result);
         } catch (error) {
             setError(error.message);
         } finally {
-            setLoading(false);  
+            setLoading(false);
         }
     };
-
-
 
     const handleSelectAnswer = useCallback(
         function handleSelectAnswer(selectedAnswer) {
@@ -41,15 +38,12 @@ const Quiz = () => {
         handleSelectAnswer(null);
     }, [handleSelectAnswer]);
 
-  
-
     useEffect(() => {
         fetchData();
     }, []);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-
 
     if (quizIsComplete) {
         return <Summary userAnswers={userAnswer} questions={data} />;
