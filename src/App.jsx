@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Login, SwitchUserRoute } from "./pages";
-import { UserContext } from "./context/userContext";
+import { UserContext } from "./context/userContext.jsx";
 
 function App() {
     const { user } = useContext(UserContext);
