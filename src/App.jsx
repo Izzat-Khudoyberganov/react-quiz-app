@@ -1,17 +1,10 @@
 import { useContext } from "react";
-import ConfirmUser from "./components/confirm";
-import Header from "./components/header";
-import Quiz from "./components/quiz";
-import { ConfirmContext } from "./context/useConfirmContext";
+import { Login, SwitchUserRoute } from "./pages";
+import { UserContext } from "./context/usercontext";
 
 function App() {
-    const { confirm } = useContext(ConfirmContext);
-    return (
-        <>
-            <Header />
-            <main>{confirm ? <Quiz /> : <ConfirmUser />}</main>
-        </>
-    );
+    const { user } = useContext(UserContext);
+    return user ?  <SwitchUserRoute /> : <Login/>
 }
 
 export default App;
