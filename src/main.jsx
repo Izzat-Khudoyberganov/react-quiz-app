@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ConfirmContextProvider } from "./context/confirmContext.jsx";
-import { UserContextProvider } from "./context/usercontext.jsx";
+import { UserContextProvider } from "./context/userContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 

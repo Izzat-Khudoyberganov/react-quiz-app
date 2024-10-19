@@ -25,7 +25,7 @@ const LoginForm = ({handleRegister}) => {
   return (
     <Fragment>
 
-            <form className='login-form' onSubmit={onSubmit}>
+            <form className='login-form' onSubmit={onSubmit} autoComplete="off">
             <h1>Login</h1>
 
                 <div className='rows'>
