@@ -52,7 +52,6 @@ header h1 {
     -webkit-text-fill-color: transparent;
 }
 
-
 #last-try {
     max-width: 40rem;
     margin: 2rem auto;
@@ -100,7 +99,7 @@ header h1 {
     align-items: start;
     max-width: 400px;
     width: 100%;
-    margin: 0 auto ;
+    margin: 0 auto;
 }
 
 .login-form h1 {
@@ -142,7 +141,18 @@ header h1 {
 }
 
 .register-btn {
+    width: 100%;
+    padding: 8px 30px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    margin: 30px auto 0;
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
     margin-top: 0px !important;
+    text-align: center;
 }
 
 #question-overview {

@@ -1,24 +1,12 @@
-import React, { useState } from 'react'
-import { LoginForm, RegisterForm } from '../components'
+import React from "react";
+import { LoginForm } from "../components";
 
 const Login = () => {
-
-    const [register, setRegister] = useState(false)
-    function handleRegister() {
-        setRegister((prev) => !prev)
-    }
-    let content;
-
-    if (register) {
-        content = <LoginForm handleRegister={handleRegister} />
-    } else {
-        content = <RegisterForm handleRegister={handleRegister} />
-    }
     return (
         <div className='login-content'>
-            {content}
+            <LoginForm />
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

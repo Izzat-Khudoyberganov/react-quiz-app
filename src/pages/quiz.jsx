@@ -1,29 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Summary from "./summary";
-import QuestionTimer from "./question-timer";
+import QuestionTimer from "../components/question-timer";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../utils/http";
 
 const Quiz = () => {
     const [userAnswer, setUserAnswers] = useState([]);
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const activeQuestionIndex = userAnswer.length;
-    const quizIsComplete = activeQuestionIndex === data.length;
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch("https://quiz-app.koyeb.app/tests");
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const result = await response.json();
-            setData(result);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["tests"],
+        queryFn: () => fetchData("/tests"),
+    });
+    console.log(data);
+
+    const activeQuestionIndex = userAnswer.length;
+    const quizIsComplete = activeQuestionIndex === data?.length;
 
     const handleSelectAnswer = useCallback(
         function handleSelectAnswer(selectedAnswer) {
@@ -38,11 +29,7 @@ const Quiz = () => {
         handleSelectAnswer(null);
     }, [handleSelectAnswer]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    if (loading)
+    if (isLoading)
         return (
             <div className='container'>
                 <p>Loading...</p>
